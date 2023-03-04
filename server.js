@@ -1,6 +1,7 @@
 const dotenv = require('dotenv');
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const mongoose = require('mongoose');
 
 // ROUTE routers
@@ -8,6 +9,7 @@ const indexRouter = require('./routes/index');
 
 dotenv.config();
 app.use(express.json());
+app.use(cors);
 
 mongoose.set('strictQuery', false);
 mongoose.connect(process.env.URI, {

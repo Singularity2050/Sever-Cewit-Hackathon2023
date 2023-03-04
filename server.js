@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 // ROUTE routers
 const indexRouter = require('./routes/index');
-
+const ripeRouter = require("./routes/ripe")
 dotenv.config();
 app.use(express.json());
 
@@ -20,7 +20,16 @@ const db = mongoose.connection;
 db.once('open', () => console.log('Connected to MongoDB'));
 db.on('error', (err) => console.error('connection error:', err));
 
+app.use((req, res, next) => {
+	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+	next();
+  });
+
+
 app.use('/', indexRouter);
+app.use('/ripe', ripeRouter);
+
+
 app.use('*', (req, res) => {
 	res.status(404).json({ message: '404 Page Not Found' });
 });

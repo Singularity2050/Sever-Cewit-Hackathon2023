@@ -1,6 +1,13 @@
+const express = require('express');
+const router = express.Router();
+const TeachableMachine = require("@sashido/teachablemachine-node");
+
+const model = new TeachableMachine({
+  modelUrl: "https://teachablemachine.withgoogle.com/models/N58PlX_GN/"
+});
 
 
-app.get("/image/classify", async (req, res) => {
+router.get("/image/classify", async (req, res) => {
     const { url } = req.query;
   
 
@@ -13,10 +20,8 @@ app.get("/image/classify", async (req, res) => {
     return model.classify({
       imageUrl: url,
     }).then((predictions) => {
-      const highestScoreClass = getHighestScoreClass(predictions);
-      console.log("Highest score class:", highestScoreClass);
-  
-  
+      const highestScoreClass = getHighestScoreClass(predictions);  
+      console.log(highestScoreClass)
       return res.json({classification: highestScoreClass});
     }).catch((e) => {
       console.error(e);
@@ -25,3 +30,5 @@ app.get("/image/classify", async (req, res) => {
   });
   
 
+
+  module.exports = router;

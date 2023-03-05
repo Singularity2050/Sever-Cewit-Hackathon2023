@@ -4,10 +4,10 @@ const User = require('../models/User');
 
 // register a User
 router.post('/new', async (req, res) => {
-	const email = req.body.email;
-	const password = req.body.password;
+	const { name, email, password } = req.body;
 	try {
 		const newUser = await new User({
+			name: name,
 			email: email,
 			password: password,
 		});
@@ -30,9 +30,9 @@ router.get('/', async (req, res) => {
 });
 
 // log in
-router.get('/login', async (req, res) => {
-	const email = req.body.email;
-	const password = req.body.password;
+router.post('/login', async (req, res) => {
+	const { email, password } = req.body;
+
 	try {
 		const filteredUser = await User.findOne({
 			email: email,

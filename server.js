@@ -9,7 +9,7 @@ const ripeRouter = require('./routes/ripe');
 
 dotenv.config();
 app.use(express.json());
-app.use(cors()); // Use the cors middleware
+app.use(cors());
 
 mongoose.set('strictQuery', false);
 mongoose.connect(process.env.URI, {
